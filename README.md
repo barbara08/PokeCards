@@ -1,0 +1,2 @@
+# PokeCards
+Juego de cartas
