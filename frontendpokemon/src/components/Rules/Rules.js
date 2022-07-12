@@ -17,7 +17,7 @@ export default function Rules() {
       </button>
 
 
-      <Modal show={rules} onHide={handleClose}>
+      <Modal size="lg" show={rules} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className="text-modal_title">Poke Card - Reglas del juego</Modal.Title>
         </Modal.Header>
@@ -64,7 +64,7 @@ export default function Rules() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-warning" onClick={handleClose}>
+          <Button variant="btn btn-warning btn-play" onClick={handleClose}>
             Cerrar
           </Button>
         </Modal.Footer>

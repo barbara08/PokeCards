@@ -90,9 +90,6 @@ export default function Iniciar(handleDataForm) {
                     </div>
                 </div>
 
-                <div className="col-sm-12 g-3">
-                    
-                </div>
 
             </div>
         </form>

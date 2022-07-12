@@ -111,5 +111,9 @@ body {
 }
 .text-modal_title{
     text-align: justify;
-    color: yellow
+    color: rgb(114, 228, 114)
+}
+.ranking_winner{
+    font-weight: bolder;
+    color: rgb(114, 228, 114)
 }
