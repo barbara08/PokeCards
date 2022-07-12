@@ -1,4 +1,45 @@
 const uuid = require('uuid');
+const helpers = require('./helpers');
+
+
+async function save_data(result, nick, ip) {
+    let conn;
+    let partidas_ganadas = result['is_win'] == 1 ? 1 : 0;
+    let puntos_ganados = result['marker']['player'];
+    let partidas_empatadas = result['is_win'] == -1 ? 1 : 0;
+    let partidas_perdidas = result['is_win'] == 0 ? 1 : 0;
+    let puntos_perdidos = result['marker']['rival'];
+    let partidas_jugadas = 1;
+    let query_insert = `INSERT INTO pokecards.ranking (
+        nick, ip, partidas_ganadas, puntos_ganados, partidas_empatadas, partidas_perdidas, puntos_perdidos, partidas_jugadas
+    ) values (
+        '${nick}', '${ip}', ${partidas_ganadas}, ${puntos_ganados}, ${partidas_empatadas}, ${partidas_perdidas}, ${puntos_perdidos}, ${partidas_jugadas}
+    )`
+    let query_update = `UPDATE ranking set
+            partidas_ganadas = partidas_ganadas + ${partidas_ganadas}, 
+            puntos_ganados = puntos_ganados + ${puntos_ganados}, 
+            partidas_empatadas = partidas_empatadas + ${partidas_empatadas}, 
+            partidas_perdidas = partidas_perdidas + ${partidas_perdidas}, 
+            puntos_perdidos = puntos_perdidos + ${puntos_perdidos}, 
+            partidas_jugadas = partidas_jugadas + ${partidas_jugadas}
+    WHERE  nick = '${nick}' AND ip = '${ip}'`;
+    console.log(query_insert);
+    console.log(query_update);
+    try {
+      conn = await helpers.pool_connections.getConnection();
+      const res = await conn.query(query_insert);
+      console.log(res);
+  
+    } catch (err) {
+        conn = await helpers.pool_connections.getConnection();
+        const res = await conn.query(query_update);
+        console.log(res);
+      throw err;
+    } finally {
+      if (conn) return conn.end();
+    }
+  }
+
 
 class Player {
     constructor(nick, ip, game, is_bot=false) {
@@ -77,13 +118,20 @@ class Player {
             result['marker'] = this.get_marker();
             result['continue'] = this.continue_playing();
             result['used_cards'] = this.info_hand(hand);
+
+            if (result['continue'] === false){
+                // guardamos los datos en bbdd cuando termina la partida
+                save_data(result, this.nick, this.ip);
+            }
         }
         return result;
     }
 
     // indica si continuamo jugando
     continue_playing(){
+        
         return this.game.continue_playing();
+        
     }
 
     // información sobre el rival

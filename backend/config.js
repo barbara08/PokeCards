@@ -12,6 +12,13 @@ const Config = {
         }
     },
     'ACCESSTOKENSECRET': 'youraccesstokensecret', // frase para generar el token junto con la información del usuario
+    'MYSQL': {
+        'HOST': 'localhost',
+        'DATABASE': 'pokecards',
+        'USER': 'pokecards',
+        'PASSWORD': 'reactjs_esta_guay',
+        'SOCKET_PATH': '/run/mysqld/mysqld.sock'
+    }
 
 }
 

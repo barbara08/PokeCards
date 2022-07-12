@@ -6,6 +6,7 @@ const cors = require('cors');               // para aceptar el cors
 const requestIp = require('request-ip');        // librería para saber la ip del cliente
 //const cookieParser = require("cookie-parser");  // usar las cookie
 //const sessions = require('express-session');    // usar las sesiones
+const mariadb = require('mariadb');
 
 
 // modulos propios del juego
@@ -13,6 +14,7 @@ const card_library = require("./card.js");  // libreria de cartas
 const game_library = require("./game.js");  // libreria del juego
 const player_library = require("./player.js");  // libreria del jugadorimport {Config} from './config.js'
 const config = require('./config');
+const helpers = require('./helpers');
 
 
 // configuración del servidor
@@ -87,6 +89,7 @@ app.get('/', (req, res) => {
   res.send("GET Request Called")
 });
 //
+
 app.post('/play', (request, response) => {
     /*
     Se llama a este endPoint cuando el usuario se loguea (frontend)
@@ -110,9 +113,9 @@ app.post('/play', (request, response) => {
     let player = new player_library.Player(data.nick, user_ip, game);
     /*
     FALTA TENER UN LISTADO DE NOMBRES PARA DARSELO AL BOT
-    name_bot = ['Ana', 'Pepe', 'MyDog']
+    name_bot = ["Ana", "Pepe", "Juan", "Carmen", "Carlos", "Rodolfo]
     */
-    let bot = new player_library.Player("soy un bot", user_ip, game, true);
+    let bot = new player_library.Player("Soy un bot", user_ip, game, true);
 
     // generamos la sesión del usuario guardando el id de player
     //j wt.sign se genera el token
@@ -226,7 +229,7 @@ app.post('/toss_card', authenticateJWT, (request, response) => {
         'status': num_hand === false ? 0 : 1,
         'message': num_hand === false ? 'Card invalid' : null,
         'hand': num_hand === false ? null : num_hand
-    }
+    };
 
     response.send(result);
 
@@ -236,12 +239,27 @@ app.post('/toss_card', authenticateJWT, (request, response) => {
     }*/
 });
 
+app.get('/ranking', (request, response) => {
+    // conectarse a bbdd y devolver los 10 mejores
+    let query = "SELECT * FROM `ranking` ORDER BY partidas_ganadas DESC, puntos_ganados DESC, partidas_empatadas DESC, partidas_perdidas DESC, puntos_perdidos DESC LIMIT 10;"
 
+    helpers.pool_connections.getConnection().then(conn => {
 
+        conn.query(query).then((rows) => {
+            response.json(rows);
+            // close connection
+            conn.end();
+        })
+        .catch(err => {
+          //handle error
+          console.log(err);
+          conn.end();
+        })
+    }).catch(err => {
+      //not connected
+    });
 
-
-
-
+});
 
 
 /*
