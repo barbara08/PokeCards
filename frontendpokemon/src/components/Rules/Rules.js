@@ -4,16 +4,23 @@ import { Modal, Button } from "react-bootstrap";
 import logo_rules from './images/file-earmark-text.svg';
 
 
-export default function Rules() {
+export default function Rules({size="lg"}) {
   const [rules, setRules] = useState(false);
 
   const handleClose = () => setRules(false);
   const handleRules = () => setRules(true);
+  let style="btn btn-dark btn-playagain";
+  let label_btn="";
+
+  if (size === "lg"){
+    style="w-100 btn btn-lg btn-warning";
+    label_btn="Reglas";
+  }
 
   return (
     <>
-      <button className="w-100 btn btn-lg btn-warning btn-rules" type="button" onClick={handleRules}>
-        <img src={logo_rules} width="16px" alt="Logo rules" /> Rules
+      <button className={style + " btn-rules"} type="button" onClick={handleRules}>
+        <img src={logo_rules} width="16px" alt="Logo rules" /> {label_btn}
       </button>
 
 

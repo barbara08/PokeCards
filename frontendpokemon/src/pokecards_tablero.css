@@ -58,6 +58,10 @@ div{
 .versus{
     /*grid-row: 2;*/
     grid-column: 5/7;
+    font-size: 30px;
+}
+.versus p{
+    font-size: 30px;
 }
 .card_empty2{
     grid-row: 2;
@@ -95,12 +99,18 @@ div{
 }
 .footer{
     grid-row: 4;
+    margin-top: 40px;
 }
 .myname{
-    grid-column: 1/6;
+    text-align: right;
+    grid-column: 1/4;
 }
 .rrss{
-    grid-column: 6/11;
+    grid-column: 4/8;
+}
+.menu_footer{
+    grid-column: 8/11;
+    text-align: left;
 }
 .card_disabled{
     opacity: 60%;
@@ -134,13 +144,13 @@ div{
       0px 0px 7px #fff;;
 }
 .rival_marker_point_value{
-  font-size: 23px;
+  font-size: 34px;
   letter-spacing: 4px;
-  
+  font-weight: bolder;
 }
 .rival_nick_value{
     font-weight:bold; 
-    font-size: 23px;
+    font-size: 34px;
 }
 .btn-continue{
     background-color: #071226; /* #090410; /* #536a36;*/

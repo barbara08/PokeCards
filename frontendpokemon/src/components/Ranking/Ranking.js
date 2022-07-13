@@ -6,7 +6,7 @@ import logo_btn_ranking from './images/ranking-star-solid.svg';
 import logo_medal from './images/medal-solid.svg';
 
 
-export default function Ranking() {
+export default function Ranking({size="lg"}) {
   const [ranking, setRanking] = useState(false);
   const [ranking_data, setRankingData] = useState([]);
 
@@ -35,11 +35,18 @@ export default function Ranking() {
   useEffect(() => {
     getDataRanking();
   }, []);
+  let style="btn btn-dark btn-playagain";
+  let label_btn="";
+
+  if (size === "lg"){
+    style="w-100 btn btn-lg btn-warning";
+    label_btn="Ranking";
+  }
 
   return (
     <>
-      <button className="w-100 btn btn-lg btn-warning btn-rules" type="button" onClick={handleRanking}>
-        <img src={logo_btn_ranking} width="20px" alt="Logo ranking" /> Ranking
+      <button className={style + " btn-rules"} type="button" onClick={handleRanking}>
+        <img src={logo_btn_ranking} width="20px" alt="Logo ranking" /> {label_btn}
       </button>
 
 

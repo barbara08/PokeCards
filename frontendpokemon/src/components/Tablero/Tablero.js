@@ -6,9 +6,13 @@ https://es.reactjs.org/docs/components-and-props.html
 // Los css las defino en pokecards_tablero.css
 
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 import Point from './Point';
 import Nick from './Nick';
+import Rules from "../Rules/Rules";
+import Ranking from "../Ranking/Ranking";
+
 import {Card, CardHidden, CARD_EMPTY_VALUE_INIT} from './Card';
 import {Config} from './config.js'
 
@@ -44,6 +48,10 @@ export default function Tablero() {
     // indica que carta ha ganado, lo usamos para destacar la carta
     const [card_win, setCardWin] = useState(-1);
 
+    // Declaramos una variable para guardar Navegación, 
+    // redirigir la pg tablero de juego hacia Inicio 
+    let navigate = useNavigate();
+    
     // pedimios informacion del juego
     const getData = (new_game=false) => {
         let url = Config.URL + "/info_game";
@@ -219,9 +227,9 @@ export default function Tablero() {
                                 setStatus(Config.STATUS_FINISH);
                                 // montar el mensaje del resultado de la partida
                                 if (response.marker.rival > response.marker.player){
-                                    setMessageInfo(`${rival.nick} gana la partida!`);
+                                    setMessageInfo(`Has perdido la partida`);
                                 }else if (response.marker.rival < response.marker.player){
-                                    setMessageInfo(`Enhorabuena ${player.nick} has ganado la partida!`);
+                                    setMessageInfo(`¡${player.nick} has ganado la partida!`);
                                 }else{
                                     setMessageInfo(`Partida empatada`);
                                 }
@@ -229,10 +237,10 @@ export default function Tablero() {
                             }else{
                                 if (response.is_win === 1){
                                     setCardWin(1);
-                                    setMessageInfo("Tu ganas la mano");
+                                    setMessageInfo("¡Mano ganada!");
                                 }else if (response.is_win === 0){
                                     setCardWin(0);
-                                    setMessageInfo("Tu pierdes la mano");
+                                    setMessageInfo("Mano perdida");
                                 }else{
                                     setCardWin(-1);
                                     setMessageInfo("Empate");
@@ -285,7 +293,7 @@ export default function Tablero() {
                     <p className="versus_title">
                         <img src="/images/vs.png" width="35px" alt="VS" />
                     </p>
-                    <p className={status===Config.STATUS_WAIT ? '' : 'hidden'}>Your Turn</p>
+                    <p className={status===Config.STATUS_WAIT ? '' : 'hidden'}>Tu Turno</p>
                     <div className={status===Config.STATUS_SHOW_INFO_HAND ? '' : 'hidden'}>
                         <p className="message_info">{message_info}</p>
                         
@@ -296,7 +304,8 @@ export default function Tablero() {
                     <div className={status===Config.STATUS_FINISH ? '' : 'hidden'}>
                         <p className="message_info_end_game">{message_info}</p>
                         <button className="btn btn-dark btn-playagain" onClick={playAgain}>
-                            Play Again
+                            <img src="/images/controller.svg" width="24px" alt="logo play" />
+                            Jugar de nuevo
                         </button>
                     </div>
                 </div>
@@ -342,6 +351,22 @@ export default function Tablero() {
                 </div>
                 <div className="footer rrss">
                     <Rrss />
+                </div>
+                <div className="footer menu_footer">
+                    
+                    <ul className="list-inline">
+                        <li className="list-inline-item">
+                            <button className="btn btn-dark btn-playagain" onClick={playAgain}>
+                                <img src="/images/house.svg" width="20px" alt="Ir a la home" />
+                            </button>
+                        </li>
+                        <li className="list-inline-item">
+                            <Ranking size="sm" />
+                        </li>
+                        <li className="list-inline-item">
+                            <Rules size="sm" />
+                        </li>
+                    </ul>
                 </div>
 
             </div>

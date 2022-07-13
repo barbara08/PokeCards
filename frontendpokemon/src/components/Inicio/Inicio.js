@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-import logo_play from './images/controller.svg';
 
 export default function Iniciar(handleDataForm) {
     //Creamos estado para el nick
@@ -85,7 +84,7 @@ export default function Iniciar(handleDataForm) {
                         <button 
                             className="w-100 btn btn-lg btn-warning btn-play"
                             type="submit">
-                                <img src={logo_play} width="16px" alt="logo play" /> Play!
+                                <img src="/images/controller.svg" width="24px" alt="logo play" /> Jugar!
                         </button>
                     </div>
                 </div>
