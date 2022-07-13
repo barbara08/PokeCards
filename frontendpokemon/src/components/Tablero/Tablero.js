@@ -138,6 +138,13 @@ export default function Tablero() {
         continueHand(e);
     }
 
+    function goToHome(e){
+        e.preventDefault();
+        // if (window.confirm("¿Estas seguro de abandonar la partida?")){
+            navigate("/");
+        // }
+    }
+
     useEffect(() => {
         // Si el estado es 0 (es mi turno) llamo al método my_turn (back)
         if (status === Config.STATUS_MYTURN){
@@ -356,7 +363,7 @@ export default function Tablero() {
                     
                     <ul className="list-inline">
                         <li className="list-inline-item">
-                            <button className="btn btn-dark btn-playagain" onClick={playAgain}>
+                            <button className="btn btn-dark btn-playagain" onClick={goToHome}>
                                 <img src="/images/house.svg" width="20px" alt="Ir a la home" />
                             </button>
                         </li>
