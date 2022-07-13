@@ -5,7 +5,7 @@ export default class Logo extends React.Component {
         return (
             <div className="row">
                 <div className="col">
-                    <img className="mb-4" src="/images/logo.png" alt="" width="72" height="57" alt="Logo Poke Cards" />
+                    <img className="mb-4" src="/images/logo.png" alt="Logo Poke Cards" />
                     <h1 className="h3 mb-3 fw-normal">Poke Cards</h1>
                 </div>
             </div>
