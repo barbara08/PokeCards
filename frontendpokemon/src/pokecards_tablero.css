@@ -138,10 +138,14 @@ div{
     grid-column: 1/3;
 }
 .rival_marker_point{
-  animation:blur .75s ease-out infinite;
+  font-size: 24px;
   letter-spacing: 4px;
+  font-weight: bolder;
+  /*
+  animation:blur .75s ease-out infinite;
     text-shadow: 0px 0px 5px #071226,
       0px 0px 7px #fff;;
+      */
 }
 .rival_marker_point_value{
   font-size: 34px;
