@@ -229,6 +229,16 @@ export default function Tablero() {
 
                             // actualizo el marcador
                             setMarker(response.marker);
+
+                            // marco la carta ganadora
+                            if (response.is_win === 1){
+                                setCardWin(1);
+                            }else if (response.is_win === 0){
+                                setCardWin(0);
+                            }else{
+                                setCardWin(-1);
+                            }
+
                             // compruebo si ha terminado el juego
                             if (response.continue === false){
                                 setStatus(Config.STATUS_FINISH);
@@ -243,13 +253,10 @@ export default function Tablero() {
                                 // setEndGame(true);
                             }else{
                                 if (response.is_win === 1){
-                                    setCardWin(1);
                                     setMessageInfo("¡Mano ganada!");
                                 }else if (response.is_win === 0){
-                                    setCardWin(0);
                                     setMessageInfo("Mano perdida");
                                 }else{
-                                    setCardWin(-1);
                                     setMessageInfo("Empate");
                                 }
                                 // muestro la información de la mano, hasta que no le de a continuar no pasa al siguiente estado
