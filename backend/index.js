@@ -48,6 +48,12 @@ console.log(game);
 // diccionario de jugadores
 let players = {};
 
+function get_name_bot(){
+    let name_bot = ["Ana", "Pepe", "Juan", "Lucía", "Erika", "Carmen", "Carlos", "Rodolfo"];
+    let pos_name_bot = helpers.between(0, name_bot.length - 1);
+    return name_bot[pos_name_bot];;
+}
+
 
 // middleware -> mirar whatsapp
 // los codigos 401 y 403 son códigos estandar de http
@@ -111,11 +117,8 @@ app.post('/play', (request, response) => {
     let game = new game_library.Game(cards);
     // creacion del jugador
     let player = new player_library.Player(data.nick, user_ip, game);
-    /*
-    FALTA TENER UN LISTADO DE NOMBRES PARA DARSELO AL BOT
-    name_bot = ["Ana", "Pepe", "Juan", "Carmen", "Carlos", "Rodolfo]
-    */
-    let bot = new player_library.Player("Soy un bot", user_ip, game, true);
+
+    let bot = new player_library.Player(get_name_bot(), user_ip, game, true);
 
     // generamos la sesión del usuario guardando el id de player
     //j wt.sign se genera el token
@@ -139,7 +142,7 @@ app.get('/info_game', authenticateJWT, (request, response) => {
     if(request.headers['x-pkcrd'] == 1){
         let game = new game_library.Game(cards);
         player.change_game(game);
-        let bot = new player_library.Player("Soy un bot", "", game, true);
+        let bot = new player_library.Player(get_name_bot(), "", game, true);
     }
 
     result = JSON.stringify({
